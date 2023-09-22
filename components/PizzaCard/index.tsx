@@ -44,7 +44,7 @@ const PizzaCard = ({ pizza, onQuantityChange }: Props) => {
 
         <View style={styles.containerBoutton}>
           <Button title="-" onPress={removePizza} />
-          <Text style={styles.countTextBoutton}> {count}</Text>
+          <Text style={styles.countTextBoutton}> {count} </Text>
           <Button title="+" onPress={addPizza} />
         </View>
         <Text
@@ -54,7 +54,7 @@ const PizzaCard = ({ pizza, onQuantityChange }: Props) => {
             paddingHorizontal: 20,
           }}
         >
-          {pizza.price}
+          {pizza.price} €
         </Text>
       </View>
     </View>

@@ -21,6 +21,10 @@ class User {
     this.address = address;
     this.password = password;
   }
+
+  public SetPassword(password: string) {
+    this.password = password;
+  }
 }
 
 export default User;

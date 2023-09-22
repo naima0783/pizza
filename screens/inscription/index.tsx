@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 import Header from "../../components/header";
 import { useState } from "react";
+import bcrypt from "react-native-bcrypt";
+
 import {
   View,
   Text,
@@ -65,10 +67,7 @@ const Inscription = ({
       .max(200, "L’adresse ne doit pas dépasser 200 caractères"),
   });
 
-  const valid = (user: User) => {
-    AuthenticationService.login(user.phonenumber, (user.password = "12345;"));
-    navigation.navigate("Validation", { pageinscription: true });
-  };
+  const salt = bcrypt.genSaltSync(10);
 
   const formik = useFormik({
     initialValues: {
@@ -91,11 +90,23 @@ const Inscription = ({
           values.mdp
         );
         console.log(client);
+
+        const hash = bcrypt.hashSync(values.mdp, salt);
+        client.SetPassword(hash);
         AuthenticationService.save(client).then((ok) => {
+          console.log("ok : " + ok);
           if (ok) {
             valid(client);
           }
         });
+        const valid = (user: User) => {
+          AuthenticationService.login(user.phonenumber, values.mdp).then(
+            (ok) => {
+              setIsAuthenticated(ok);
+              navigation.navigate("Validation", { pageinscription: true });
+            }
+          );
+        };
       } catch (error) {
         console.error("Error during sing in :", error);
       }

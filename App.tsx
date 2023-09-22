@@ -55,11 +55,6 @@ const App = () => {
             name="PizzaScreen"
             component={PizzaScreen}
           />
-          <Stack.Screen
-            name="Validation"
-            component={Validation}
-            options={{ headerShown: false }}
-          />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>
@@ -75,6 +70,11 @@ const App = () => {
             children={(props: any) => (
               <Inscription {...props} setIsAuthenticated={setIsAuthenticated} />
             )}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Validation"
+            component={Validation}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
