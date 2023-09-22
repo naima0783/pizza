@@ -63,13 +63,10 @@ class AuthenticationService {
 
   static async save(client: User): Promise<boolean> {
     try {
-      const jwt = await AuthenticationService.getJwt();
       const response = await fetch(`${config.adresseIp}/auth/save`, {
         method: "POST",
         body: JSON.stringify(client),
-
         headers: {
-          authorization: jwt || "",
           "Content-Type": "application/json",
         },
       });

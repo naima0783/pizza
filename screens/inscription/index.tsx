@@ -14,6 +14,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import { StatusBar } from "react-native";
 import * as yup from "yup";
@@ -64,8 +65,8 @@ const Inscription = ({
       .max(200, "L’adresse ne doit pas dépasser 200 caractères"),
   });
 
-  const valid = () => {
-    setIsAuthenticated(true);
+  const valid = (user: User) => {
+    AuthenticationService.login(user.phonenumber, (user.password = "12345;"));
     navigation.navigate("Validation", { pageinscription: true });
   };
 
@@ -80,23 +81,21 @@ const Inscription = ({
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       try {
         const client: User = new User(
           values.telephone,
           "USER",
           values.nom,
           values.prenom,
-
           values.adresse,
           values.mdp
         );
-        let res;
-        AuthenticationService.save(client).then((res) => (res = res));
-
-        if (res) {
-          valid();
-        }
+        console.log(client);
+        AuthenticationService.save(client).then((ok) => {
+          if (ok) {
+            valid(client);
+          }
+        });
       } catch (error) {
         console.error("Error during sing in :", error);
       }
