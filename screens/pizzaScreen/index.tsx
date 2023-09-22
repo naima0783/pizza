@@ -7,17 +7,23 @@ import ListPizza from "../../components/PizzaList";
 import PizzaService from "../../services/PizzaService";
 
 const PizzaScreen = ({ navigation }: any) => {
-  const [pizzaList, setPizzaList] = useState<Pizza[] | undefined>();
+  const [pizzaList, setPizzaList] = useState<Pizza[]>([]);
 
   useEffect(() => {
-    PizzaService.getAll().then((pizzas) => setPizzaList(pizzas));
+    PizzaService.getAll().then((pizzas) => {
+      if (pizzas) {
+        setPizzaList(pizzas);
+      } else {
+        console.error("Failed to fetch pizzas");
+      }
+    });
   }, []);
 
   return (
     <View style={{ flex: 1 }}>
       <Header navigation={navigation} title="Passez votre commande." />
 
-      <ListPizza navigation={navigation} pizzas={pizzaList} orderline={[]} />
+      <ListPizza navigation={navigation} pizzas={pizzaList} />
     </View>
   );
 };

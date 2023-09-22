@@ -30,7 +30,7 @@ class AuthenticationService {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(this.isAuthenticated());
-      }, 1000);
+      }, 600);
     });
   }
 
@@ -61,7 +61,7 @@ class AuthenticationService {
     return AsyncStorage.getItem("jwt");
   }
 
-  static async save(client: User): Promise<User> {
+  static async save(client: User): Promise<boolean> {
     try {
       const jwt = await AuthenticationService.getJwt();
       const response = await fetch(`${config.adresseIp}/auth/save`, {
@@ -78,10 +78,11 @@ class AuthenticationService {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
 
-      return await response.json();
+      return true;
     } catch (error) {
       console.error(error);
       throw error;
+      return false;
     }
   }
 }

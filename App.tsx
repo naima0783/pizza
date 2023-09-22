@@ -69,12 +69,12 @@ const App = () => {
               <Login {...props} setIsAuthenticated={setIsAuthenticated} />
             )}
             options={{ headerShown: false }}
-            initialParams={{ isAuthenticated: undefined }}
           />
-
           <Stack.Screen
             name="Inscription"
-            component={Inscription}
+            children={(props: any) => (
+              <Inscription {...props} setIsAuthenticated={setIsAuthenticated} />
+            )}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

@@ -21,8 +21,14 @@ import { useFormik } from "formik";
 import styles from "./style";
 import AuthenticationService from "../../services/AuthenticationService";
 import User from "../../models/security/user";
+interface Props {
+  setIsAuthenticated: Function;
+}
 
-const Inscription = ({ navigation }: any) => {
+const Inscription = ({
+  navigation,
+  setIsAuthenticated,
+}: Props & { navigation: any }) => {
   const validationSchema = yup.object().shape({
     nom: yup
       .string()
@@ -58,6 +64,11 @@ const Inscription = ({ navigation }: any) => {
       .max(200, "L’adresse ne doit pas dépasser 200 caractères"),
   });
 
+  const valid = () => {
+    setIsAuthenticated(true);
+    navigation.navigate("Validation", { pageinscription: true });
+  };
+
   const formik = useFormik({
     initialValues: {
       nom: "",
@@ -80,9 +91,12 @@ const Inscription = ({ navigation }: any) => {
           values.adresse,
           values.mdp
         );
-        AuthenticationService.save(client);
+        let res;
+        AuthenticationService.save(client).then((res) => (res = res));
 
-        navigation.navigate("Validation", { pageinscription: true });
+        if (res) {
+          valid();
+        }
       } catch (error) {
         console.error("Error during sing in :", error);
       }
@@ -156,7 +170,7 @@ const Inscription = ({ navigation }: any) => {
               returnKeyType="next"
               secureTextEntry
             />
-            {formik.touched.prenom && formik.errors.mdp ? (
+            {formik.touched.mdp && formik.errors.mdp ? (
               <Text style={styles.errorText}>{formik.errors.mdp}</Text>
             ) : null}
 

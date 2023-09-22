@@ -120,9 +120,17 @@ const Login = ({
           />
         </View>
 
-        <View>
+        <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
           <TouchableOpacity onPress={() => goToInscription()}>
-            <Text style={{ color: "#FFC921" }}>créé un compte</Text>
+            <Text
+              style={{
+                color: "#FFC921",
+                textDecorationLine: "underline",
+                fontWeight: "bold",
+              }}
+            >
+              créé un compte
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
@@ -130,7 +138,7 @@ const Login = ({
             style={styles.button}
             onPress={() => formik.handleSubmit()}
           >
-            <Text style={styles.buttonText}>Se connecter</Text>
+            <Text style={styles.buttonText}>Connexion</Text>
           </TouchableOpacity>
         </View>
         {error && <Text style={styles.errorText}>Connexion impossible</Text>}

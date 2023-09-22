@@ -6,23 +6,24 @@ import Pizza from "../../models/pizza";
 
 type Props = {
   pizza: Pizza;
+  onQuantityChange?: (pizzaId: number, quantity: number) => void;
 };
 
-const PizzaCard = ({ pizza }: Props) => {
+const PizzaCard = ({ pizza, onQuantityChange }: Props) => {
   const [quantite, setQuantite] = useState(0);
   const [count, setCount] = useState(0);
 
   const addPizza = () => {
     if (count < 10) {
       setCount(count + 1);
-      setQuantite(count + 1);
+      onQuantityChange && onQuantityChange(pizza.id, count + 1);
     }
   };
 
   const removePizza = () => {
     if (count > 0) {
       setCount(count - 1);
-      setQuantite(count - 1);
+      onQuantityChange && onQuantityChange(pizza.id, count - 1);
     }
   };
   const lien = pizaaImage[pizza.image];
