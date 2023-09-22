@@ -6,13 +6,20 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "ts:check": "tsc"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "1.18.2",
+    "@react-navigation/native": "^6.1.7",
+    "@react-navigation/native-stack": "^6.9.13",
+    "@rneui/themed": "^4.0.0-rc.8",
     "expo": "~49.0.11",
     "expo-status-bar": "~1.6.0",
+    "formik": "^2.4.5",
     "react": "18.2.0",
-    "react-native": "0.72.4"
+    "react-native": "0.72.4",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
